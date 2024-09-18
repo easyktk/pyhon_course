@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 import re
 from faker import Faker
-
+import morse_code
 
 class Lab1(Lab):
     @staticmethod
@@ -121,7 +121,7 @@ class Lab1(Lab):
                     break
             else:
                 primes.append(i)
-        print(f"Прості числа у діапазоні від 1 до {value}: {" ".join(map(str, primes))}")
+        print(f"Прості числа у діапазоні від 1 до {value}: {' '.join(map(str, primes))}")
 
     def practice_5(self, value=None):
         box_size = 6
@@ -161,7 +161,7 @@ class Lab2(Lab):
         print(f'сума його цифр {"більша" if sum(map(int, number)) > 10 else "менша"} за число 10;')
 
         s = sum(map(int, number[0:2])) > sum(map(int, number[2:]))
-        print(f"сума його перших двох цифр {"більша" if s else "не більша"} за суму наступних двох цифр")
+        print(f"сума його перших двох цифр {'більша' if s else 'не більша'} за суму наступних двох цифр")
 
     @staticmethod
     def part3():
@@ -437,11 +437,176 @@ class Lab3(Lab):
         for line in result:
             print(line)
 
+    def practice4(self, students=None):
+        if students is None:
+            fake = Faker('uk_UA')
+            names = [fake.last_name() for i in range(10)]
+            groups = ["RT"+str(random.randint(1,50)) for i in range(10)]
+            grades = [3,4,5,None]
+            students = []
+            for i in range(25):
+                student = {"Name":random.choice(names), "group":random.choice(groups),
+                           "grades":[random.choice(grades) for i in range(3)]}
+                students.append(student)
+
+        zaborg = []
+        good_st = []
+        grd = [0,0,0]
+        for student in students:
+            counter = 0
+            for order, grade in enumerate(student["grades"]):
+                if grade is None:
+                    zaborg.append(student["Name"])
+                else:
+                    grd[order] += grade
+                    if grade == 4 or grade == 5:
+                        counter += 1
+            if counter == 3:
+                good_st.append(student["Name"])
+
+        print(f"Найкраще здали предмет номер { grd.index(max(grd)) + 1}")
+        print(f"заборговоності у студентів {zaborg})")
+        print(f"Здали на  4-5 {good_st}")
+
+    def practice5(self, numbers=None):
+        if numbers is None:
+            numbers = [random.randint(1,9999) for i in range(10000)]
+        f1 = 1
+        f2 = 1
+        i= 0
+        fbn=[]
+        while i < 15000:
+            fibonachi = f1 + f2
+            fbn.append(fibonachi)
+            f1 = f2
+            f2 = fibonachi
+            i += f1
+        res = []
+        for ind, num in enumerate(numbers):
+            if num in fbn:
+                res.append(num)
+        print(f"числа фібоначі із ряду {res}")
+        print(f"порядок чисел {[fbn.index(i) for i in res]}")
+
+
+
 
 class Lab4(Lab):
-    pass
+    def part1(self,numbers = None):
+        if numbers is None:
+            numbers = [random.randint(1, 100) for _ in range(100)]
+        print(f"максимальне значення = {max(numbers)}, мінімальне значення = {min(numbers)}")
+        print(f"среднє значення = {sum(numbers)/len(numbers)}")
 
+    def part2(self):
+        res = []
+        for i in range(0,10):
+            for j in range(0,10):
+                for k in range(0,10):
+                    for q in range(0,10):
+                        for w in range(0,10):
+                            for e in range(0,10):
+                                if i + j + k == q + w + e:
+                                    r = "".join(map(str,[i,j,k,q,w,e]))
+                                    res.append(r)
+        print(res)
+        def sum_of_3(number):
+            res = 0
+            for i in range(3):
+                res += number % 10
+                number -= number % 10
+                number //= 10
+            return res
 
+    def part3(self, value=None):
+        if value is None:
+            value = "safdjkghlghfdkjghfdkjlakfkdj"
+        res = morse_code.encrypt(value)
+        print(res)
+
+    def part3_1(self, value=None):
+        if value is None:
+            value = ".-. ----. . -.-. .. .--- ..-. --. -.- ..-. --. . -.-. .--- .. ..-. "
+        res = morse_code.decrypt(value)
+        print(res)
+
+    def part4(self, data=None, key=None):
+        if key is None:
+            key = "gsljjsdlalfalafdsgdsgsd"
+        if data is None:
+            data = "README.md"
+        with open(data, "r") as file:
+            data = file.read()
+            while len(key) < len(data):
+                key += key
+            res = []
+            for ch, k in zip(key, data):
+                symb = int(ord(k)) ^ int(ord(ch))
+                res.append(chr(symb))
+        with open ("encrypted", "w") as file:
+            file.write("".join(res))
+
+    def part4_1(self, key =None):
+        if key is None:
+            key = "gsljjsdlalfalafdsgdsgsd"
+
+        with open("encrypted", "r") as file:
+            data = file.read()
+            while len(key) < len(data):
+                key += key
+            res = []
+            for ch, k in zip(key, data):
+                symb = int(ord(k)) ^ int(ord(ch))
+                res.append(chr(symb))
+            print("".join(res))
+
+    def part5(self, number="568596840", minimum = 11, maximum = 0, summa = 0):
+        if len(number) > 0:
+            current = int(number[0])
+            summa += current
+            if current < minimum:
+                minimum = current
+            if current > maximum:
+                maximum = current
+            self.part5(number[1:], minimum, maximum, summa)
+        if len(number) == 0:
+            print(minimum, maximum, summa)
+
+    def practice1(self):
+        def deco(func):
+            def wrapper(*args):
+                for i in args:
+                    if type(i) is not int:
+                        raise ValueError
+                return func(*args)
+            return wrapper
+        @deco
+        def func(*args):
+            print(args)
+
+        func(1,"a",3)
+
+    def practice2(self, number=28):
+        counter = 0
+        for i in range(1,number):
+            if number % i == 0:
+                counter += i
+        print(number == counter)
+
+    def practice3(self):
+        def paskal(number=10, row=[1]):
+            for i in range(number):
+                print(row)
+                row = [sum(x) for x in zip([0] + row, row + [0])]
+                yield row
+        for i in paskal():
+            print(i)
+
+    def practice4(self, url="https://www.google.com/search?q=test&oq=test&gs_lcrp=EgZjaHJv"
+                            "bWUyBggAEEUYOTIHCAEQABiPAjIHCAIQABiPAjIHCAMQABiPAtIBCTE4NzRqMGo"
+                            "xNagCCLACAQ&sourceid=chrome&ie=UTF-8"):
+        url.split(":")
+        res = {}
 class Lab5(Lab):
     pass
 
@@ -453,5 +618,5 @@ class Lab6(Lab):
 if __name__ == "__main__":
     pass
     # Lab2()()
-    lab3 = Lab3()
+    lab3 = Lab4()
     lab3.practice3()
