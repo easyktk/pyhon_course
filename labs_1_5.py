@@ -665,5 +665,5 @@ class Lab6(Lab):
 if __name__ == "__main__":
     pass
     # Lab2()()
-    lab3 = Lab4()
-    lab3.pratice7()
+    # lab3 = Lab4()
+    # lab3.pratice7()
