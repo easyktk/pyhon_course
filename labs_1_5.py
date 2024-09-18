@@ -594,6 +594,14 @@ class Lab4(Lab):
         print(number == counter)
 
     def practice3(self):
+        def deco(func):
+            try:
+                func()
+            except Exception as E:
+                print(E)
+
+
+    def practice4(self):
         def paskal(number=10, row=[1]):
             for i in range(number):
                 print(row)
@@ -602,11 +610,42 @@ class Lab4(Lab):
         for i in paskal():
             print(i)
 
-    def practice4(self, url="https://www.google.com/search?q=test&oq=test&gs_lcrp=EgZjaHJv"
+    def practice5(self, url="https://www.google.com/search?q=test&oq=test&gs_lcrp=EgZjaHJv"
                             "bWUyBggAEEUYOTIHCAEQABiPAjIHCAIQABiPAjIHCAMQABiPAtIBCTE4NzRqMGo"
                             "xNagCCLACAQ&sourceid=chrome&ie=UTF-8"):
-        url.split(":")
-        res = {}
+        url = url.split("//")
+        res = {"proto":url[0]}
+        url = url[1].split("/")
+        site = url[0].split(".")
+        res["site"] = [i for i in site]
+        res["tail"] = url[1]
+        print(res)
+
+    def practice6(self, students=None):
+        if students is None:
+            fake = Faker('uk_UA')
+            names = [fake.last_name() for i in range(10)]
+            groups = ["RT"+str(random.randint(1,50)) for i in range(10)]
+            grades = [3,4,5,None]
+            students = []
+            for i in range(25):
+                student = {"Name":random.choice(names), "group":random.choice(groups),
+                           "grades":[random.choice(grades) for i in range(3)], "age":random.randint(16, 100)}
+                students.append(student)
+        min_age = 101
+        res = None
+        d = {}
+        for st in students:
+            if st["age"] < min_age:
+                res = st
+                min_age = st["age"]
+            d[st["age"]] = st
+        print(res)
+        print(d)
+
+
+
+
 class Lab5(Lab):
     pass
 
@@ -619,4 +658,4 @@ if __name__ == "__main__":
     pass
     # Lab2()()
     lab3 = Lab4()
-    lab3.practice3()
+    lab3.practice5()
