@@ -10,6 +10,7 @@ from matplotlib.patches import Circle
 import re
 from faker import Faker
 import morse_code
+import os
 
 class Lab1(Lab):
     @staticmethod
@@ -643,6 +644,13 @@ class Lab4(Lab):
         print(res)
         print(d)
 
+    def pratice7(self, path="/home/easyktk/", s="deb"):
+        for r, dirs, files in os.walk(path):
+            for name in files:
+                if name.endswith(s):
+                    print(name)
+
+
 
 
 
@@ -658,4 +666,4 @@ if __name__ == "__main__":
     pass
     # Lab2()()
     lab3 = Lab4()
-    lab3.practice5()
+    lab3.pratice7()
