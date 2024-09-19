@@ -654,14 +654,6 @@ class Lab4(Lab):
 
 
 
-class Lab5(Lab):
-    pass
-
-
-class Lab6(Lab):
-    pass
-
-
 if __name__ == "__main__":
     #Example usage
     all_labs = [Lab1, Lab2, Lab3, Lab4]
