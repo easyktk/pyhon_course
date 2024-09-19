@@ -33,7 +33,7 @@ test_images = test_images.astype('float32') / 255
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
 
-epch = 5
+epch = 0
 history = network.fit(train_images, train_labels, epochs=epch,
 batch_size=32, validation_data=(test_images, test_labels))
 
@@ -52,22 +52,25 @@ network.summary()
 
 #y_pred = network.predict(train_images)
 
-img=mpimg.imread('6.png')
+img = mpimg.imread('6.png')
 # imgplot = plt.imshow(img)
 # plt.show()
 
 gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 resized_img = cv2.resize(gray_img, (28, 28))
-_, black_white_img = cv2.threshold(resized_img, 128, 255,
-cv2.THRESH_BINARY )
 
-plt.imshow(resized_img)
+#some issue here
+# resized_img = resized_img.astype(np.uint8)
+_, black_white_img = cv2.threshold(resized_img, 125, 255,
+cv2.THRESH_BINARY)
+
+plt.imshow(black_white_img, cmap=plt.cm.binary)
 plt.show()
-# cv2.imshow('Raw Image', black_white_img)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
+cv2.imshow('Raw Image', resized_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 #changed black_wite to resized
-images = resized_img.reshape((1, 28 * 28))
+images = black_white_img.reshape((1, 28 * 28))
 images = images.astype('float64')/255
 images.shape
 
