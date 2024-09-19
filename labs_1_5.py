@@ -663,7 +663,7 @@ class Lab6(Lab):
 
 
 if __name__ == "__main__":
-    pass
-    # Lab2()()
-    # lab3 = Lab4()
-    # lab3.pratice7()
+    #Example usage
+    all_labs = [Lab1, Lab2, Lab3, Lab4]
+    for lab in all_labs:
+        lab()()
