@@ -655,6 +655,7 @@ class Lab4(Lab):
 
 if __name__ == "__main__":
     # Example usage
+    #Lab1().part1()
     all_labs = [Lab1, Lab2, Lab3, Lab4]
     for lab in all_labs:
         lab()()
