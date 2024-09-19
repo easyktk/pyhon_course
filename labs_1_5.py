@@ -12,6 +12,7 @@ from faker import Faker
 import morse_code
 import os
 
+
 class Lab1(Lab):
     @staticmethod
     def part1(value=None):
@@ -442,17 +443,17 @@ class Lab3(Lab):
         if students is None:
             fake = Faker('uk_UA')
             names = [fake.last_name() for i in range(10)]
-            groups = ["RT"+str(random.randint(1,50)) for i in range(10)]
-            grades = [3,4,5,None]
+            groups = ["RT" + str(random.randint(1, 50)) for i in range(10)]
+            grades = [3, 4, 5, None]
             students = []
             for i in range(25):
-                student = {"Name":random.choice(names), "group":random.choice(groups),
-                           "grades":[random.choice(grades) for i in range(3)]}
+                student = {"Name": random.choice(names), "group": random.choice(groups),
+                           "grades": [random.choice(grades) for i in range(3)]}
                 students.append(student)
 
         zaborg = []
         good_st = []
-        grd = [0,0,0]
+        grd = [0, 0, 0]
         for student in students:
             counter = 0
             for order, grade in enumerate(student["grades"]):
@@ -465,17 +466,17 @@ class Lab3(Lab):
             if counter == 3:
                 good_st.append(student["Name"])
 
-        print(f"Найкраще здали предмет номер { grd.index(max(grd)) + 1}")
+        print(f"Найкраще здали предмет номер {grd.index(max(grd)) + 1}")
         print(f"заборговоності у студентів {zaborg})")
         print(f"Здали на  4-5 {good_st}")
 
     def practice5(self, numbers=None):
         if numbers is None:
-            numbers = [random.randint(1,9999) for i in range(10000)]
+            numbers = [random.randint(1, 9999) for i in range(10000)]
         f1 = 1
         f2 = 1
-        i= 0
-        fbn=[]
+        i = 0
+        fbn = []
         while i < 15000:
             fibonachi = f1 + f2
             fbn.append(fibonachi)
@@ -490,27 +491,26 @@ class Lab3(Lab):
         print(f"порядок чисел {[fbn.index(i) for i in res]}")
 
 
-
-
 class Lab4(Lab):
-    def part1(self,numbers = None):
+    def part1(self, numbers=None):
         if numbers is None:
             numbers = [random.randint(1, 100) for _ in range(100)]
         print(f"максимальне значення = {max(numbers)}, мінімальне значення = {min(numbers)}")
-        print(f"среднє значення = {sum(numbers)/len(numbers)}")
+        print(f"среднє значення = {sum(numbers) / len(numbers)}")
 
     def part2(self):
         res = []
-        for i in range(0,10):
-            for j in range(0,10):
-                for k in range(0,10):
-                    for q in range(0,10):
-                        for w in range(0,10):
-                            for e in range(0,10):
+        for i in range(0, 10):
+            for j in range(0, 10):
+                for k in range(0, 10):
+                    for q in range(0, 10):
+                        for w in range(0, 10):
+                            for e in range(0, 10):
                                 if i + j + k == q + w + e:
-                                    r = "".join(map(str,[i,j,k,q,w,e]))
+                                    r = "".join(map(str, [i, j, k, q, w, e]))
                                     res.append(r)
         print(res)
+
         def sum_of_3(number):
             res = 0
             for i in range(3):
@@ -544,10 +544,10 @@ class Lab4(Lab):
             for ch, k in zip(key, data):
                 symb = int(ord(k)) ^ int(ord(ch))
                 res.append(chr(symb))
-        with open ("encrypted", "w") as file:
+        with open("encrypted", "w") as file:
             file.write("".join(res))
 
-    def part4_1(self, key =None):
+    def part4_1(self, key=None):
         if key is None:
             key = "gsljjsdlalfalafdsgdsgsd"
 
@@ -561,7 +561,7 @@ class Lab4(Lab):
                 res.append(chr(symb))
             print("".join(res))
 
-    def part5(self, number="568596840", minimum = 11, maximum = 0, summa = 0):
+    def part5(self, number="568596840", minimum=11, maximum=0, summa=0):
         if len(number) > 0:
             current = int(number[0])
             summa += current
@@ -580,16 +580,18 @@ class Lab4(Lab):
                     if type(i) is not int:
                         raise ValueError
                 return func(*args)
+
             return wrapper
+
         @deco
         def func(*args):
             print(args)
 
-        func(1,"a",3)
+        func(1, "a", 3)
 
     def practice2(self, number=28):
         counter = 0
-        for i in range(1,number):
+        for i in range(1, number):
             if number % i == 0:
                 counter += i
         print(number == counter)
@@ -601,13 +603,13 @@ class Lab4(Lab):
             except Exception as E:
                 print(E)
 
-
     def practice4(self):
         def paskal(number=10, row=[1]):
             for i in range(number):
                 print(row)
                 row = [sum(x) for x in zip([0] + row, row + [0])]
                 yield row
+
         for i in paskal():
             print(i)
 
@@ -615,7 +617,7 @@ class Lab4(Lab):
                             "bWUyBggAEEUYOTIHCAEQABiPAjIHCAIQABiPAjIHCAMQABiPAtIBCTE4NzRqMGo"
                             "xNagCCLACAQ&sourceid=chrome&ie=UTF-8"):
         url = url.split("//")
-        res = {"proto":url[0]}
+        res = {"proto": url[0]}
         url = url[1].split("/")
         site = url[0].split(".")
         res["site"] = [i for i in site]
@@ -626,12 +628,12 @@ class Lab4(Lab):
         if students is None:
             fake = Faker('uk_UA')
             names = [fake.last_name() for i in range(10)]
-            groups = ["RT"+str(random.randint(1,50)) for i in range(10)]
-            grades = [3,4,5,None]
+            groups = ["RT" + str(random.randint(1, 50)) for i in range(10)]
+            grades = [3, 4, 5, None]
             students = []
             for i in range(25):
-                student = {"Name":random.choice(names), "group":random.choice(groups),
-                           "grades":[random.choice(grades) for i in range(3)], "age":random.randint(16, 100)}
+                student = {"Name": random.choice(names), "group": random.choice(groups),
+                           "grades": [random.choice(grades) for i in range(3)], "age": random.randint(16, 100)}
                 students.append(student)
         min_age = 101
         res = None
@@ -651,11 +653,8 @@ class Lab4(Lab):
                     print(name)
 
 
-
-
-
 if __name__ == "__main__":
-    #Example usage
+    # Example usage
     all_labs = [Lab1, Lab2, Lab3, Lab4]
     for lab in all_labs:
         lab()()
