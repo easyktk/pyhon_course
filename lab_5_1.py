@@ -8,6 +8,11 @@ import cv2
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
+import tensorflow as tf
+
+tf.config.threading.set_intra_op_parallelism_threads(11)
+tf.config.threading.set_inter_op_parallelism_threads(11)
+
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 train_images.shape, test_images.shape, len(train_labels), len(test_labels)
 
@@ -33,7 +38,7 @@ test_images = test_images.astype('float32') / 255
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
 
-epch = 0
+epch = 5
 history = network.fit(train_images, train_labels, epochs=epch,
 batch_size=32, validation_data=(test_images, test_labels))
 
@@ -52,7 +57,7 @@ network.summary()
 
 #y_pred = network.predict(train_images)
 
-img = mpimg.imread('6.png')
+img = mpimg.imread('6.jpg')
 # imgplot = plt.imshow(img)
 # plt.show()
 
@@ -61,17 +66,18 @@ resized_img = cv2.resize(gray_img, (28, 28))
 
 #some issue here
 # resized_img = resized_img.astype(np.uint8)
-_, black_white_img = cv2.threshold(resized_img, 125, 255,
+_, black_white_img = cv2.threshold(resized_img, 180, 255,
 cv2.THRESH_BINARY)
 
+black_white_img = cv2.bitwise_not(black_white_img)
 plt.imshow(black_white_img, cmap=plt.cm.binary)
 plt.show()
-cv2.imshow('Raw Image', resized_img)
+cv2.imshow('Raw Image', black_white_img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 #changed black_wite to resized
 images = black_white_img.reshape((1, 28 * 28))
-images = images.astype('float64')/255
+images = images.astype('float32')#/255
 images.shape
 
 y_pred_some_digit = network.predict(images)
