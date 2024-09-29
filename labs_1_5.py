@@ -30,8 +30,9 @@ class Lab1(Lab):
     @staticmethod
     def part2():
         v = [input("Введіть а:"), input("Введіть b:"), input("Введіть c:")]
-        v = map(int, v)
+
         try:
+            v = map(int, v)
             a, b, c = v
         except ValueError:
             print("ValueError")
@@ -106,7 +107,7 @@ class Lab1(Lab):
             coord_2 = map(float, value2.split(","))
             res = haversine(coord_1, coord_2)
             print(f"{res}")
-        except ValueError:
+        except Exception:
             print("Невірний ввід")
 
     def practice_4(self, value=None):
@@ -115,7 +116,7 @@ class Lab1(Lab):
         if self._validate_input_for_digits(value):
             print("Невірний ввід")
             return
-        value1 = int(value)
+        value = int(value)
         primes = []
         for i in range(2, value + 1):
             for j in range(2, i // 2, 2):
