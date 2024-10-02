@@ -1,2 +1,4 @@
-t = bytearray(10)
-print(t)
+import os
+
+os.mkdir("my_directory")
+print(os.listdir())
